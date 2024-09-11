@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Bullying</title>
+    <style>
+        body {
+            background-color: #313131;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .person {
+            margin: 10px;
+            padding: 20px;
+            border: 2px solid rgb(155, 155, 155);
+            border-radius: 15px;
+            width: 200px;
+        }
+        button {
+            margin: 5px;
+            padding: 15px;
+            background-color: #414141;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Contador de Bullying</h1>
+    <div class="container">
+        <div class="person" id="Ana">
+            <h2>Ana</h2>
+            <p>Bullying feitos: <span class="made" id="madeAna">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedAna">0</span></p>
+            <button onclick="adjustCount('made', 'Ana', 1)">+1 Xingamento Feito</button>
+            <button onclick="adjustCount('made', 'Ana', -1)">-1 Pedido de Desculpa</button>
+            <button onclick="adjustCount('received', 'Ana', 1)">+1 Xingamento Recebido</button>
+            <button onclick="adjustCount('received', 'Ana', -1)">-1 Desculpa recebida</button>
+        </div>
+        <div class="person" id="Carol">
+            <h2>Carol</h2>
+            <p>Bullying feitos: <span class="made" id="madeCarol">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedCarol">0</span></p>
+            <button onclick="adjustCount('made', 'Carol', 1)">+1 Xingamento Feito</button>
+            <button onclick="adjustCount('made', 'Carol', -1)">-1 Pedido de Desculpa</button>
+            <button onclick="adjustCount('received', 'Carol', 1)">+1 Xingamento Recebido</button>
+            <button onclick="adjustCount('received', 'Carol', -1)">-1 Desculpa recebida</button>
+        </div>
+        <div class="person" id="Heverson">
+            <h2>Heverson</h2>
+            <p>Bullying feitos: <span class="made" id="madeHeverson">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedHeverson">0</span></p>
+            <button onclick="adjustCount('made', 'Heverson', 1)">+1 Xingamento Feito</button>
+            <button onclick="adjustCount('made', 'Heverson', -1)">-1 Pedido de Desculpa</button>
+            <button onclick="adjustCount('received', 'Heverson', 1)">+1 Xingamento Recebido</button>
+            <button onclick="adjustCount('received', 'Heverson', -1)">-1 Desculpa Recebida</button>
+        </div>
+        <div class="person" id="Elian">
+            <h2>Elian</h2>
+            <p>Bullying feitos: <span class="made" id="madeElian">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedElian">0</span></p>
+            <button onclick="adjustCount('made', 'Elian', 1)">+1 Xingamento Feito</button>
+            <button onclick="adjustCount('made', 'Elian', -1)">-1 Pedido de Desculpa</button>
+            <button onclick="adjustCount('received', 'Elian', 1)">+1 Xingamento Recebido</button>
+            <button onclick="adjustCount('received', 'Elian', -1)">-1 Desculpa Recebida</button>
+        </div>
+        <div class="person" id="Victor">
+            <h2>Victor</h2>
+            <p>Bullying feitos: <span class="made" id="madeVictor">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedVictor">0</span></p>
+            <button onclick="adjustCount('made', 'Victor', 1)">+1 Xingamento Feito</button>
+            <button onclick="adjustCount('made', 'Victor', -1)">-1 Pedido de Desculpa</button>
+            <button onclick="adjustCount('received', 'Victor', 1)">+1 Xingamento Recebido</button>
+            <button onclick="adjustCount('received', 'Victor', -1)">-1 Desculpa Recebida</button>
+        </div>
+    </div>
+
+    <script>
+        // Atualiza a exibição dos contadores
+        const updateDisplay = async () => {
+            try {
+                const response = await fetch('/api/counts');
+                const data = await response.json();
+                const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
+                people.forEach(person => {
+                    document.getElementById(`made${person}`).textContent = data[person].made;
+                    document.getElementById(`received${person}`).textContent = data[person].received;
+                });
+            } catch (error) {
+                console.error('Erro ao atualizar a exibição:', error);
+            }
+        };
+    
+        // Ajusta o contador e armazena no servidor
+        const adjustCount = async (type, person, value) => {
+            try {
+                const response = await fetch('/api/update', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ person, type, value })
+                });
+                if (response.ok) {
+                    await updateDisplay();
+                } else {
+                    console.error('Erro ao atualizar os dados:', await response.text());
+                }
+            } catch (error) {
+                console.error('Erro ao fazer a requisição:', error);
+            }
+        };
+    
+        // Inicializa e atualiza a tela
+        updateDisplay();
+    </script>
+</body>
+</html>
