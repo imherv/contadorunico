@@ -89,42 +89,40 @@
     </div>
 
     <script>
-        // Atualiza a exibição dos contadores
-        const updateDisplay = async () => {
-            try {
-                const response = await fetch('/api/counts');
-                const data = await response.json();
-                const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
-                people.forEach(person => {
-                    document.getElementById(`made${person}`).textContent = data[person].made;
-                    document.getElementById(`received${person}`).textContent = data[person].received;
-                });
-            } catch (error) {
-                console.error('Erro ao atualizar a exibição:', error);
-            }
-        };
-    
-        // Ajusta o contador e armazena no servidor
-        const adjustCount = async (type, person, value) => {
-            try {
-                const response = await fetch('/api/update', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ person, type, value })
-                });
-                if (response.ok) {
-                    await updateDisplay();
-                } else {
-                    console.error('Erro ao atualizar os dados:', await response.text());
+        // Inicializa os contadores do localStorage
+        const initStorage = () => {
+            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
+            people.forEach(person => {
+                if (!localStorage.getItem(`made_${person}`)) {
+                    localStorage.setItem(`made_${person}`, '0');
                 }
-            } catch (error) {
-                console.error('Erro ao fazer a requisição:', error);
-            }
+                if (!localStorage.getItem(`received_${person}`)) {
+                    localStorage.setItem(`received_${person}`, '0');
+                }
+            });
         };
-    
+
+        // Atualiza a exibição dos contadores
+        const updateDisplay = () => {
+            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
+            people.forEach(person => {
+                document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
+                document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
+            });
+        };
+
+        // Ajusta o contador e armazena no localStorage
+        const adjustCount = (type, person, value) => {
+            let key = `${type}_${person}`;
+            let currentValue = parseInt(localStorage.getItem(key));
+            currentValue += value;
+            if (currentValue < 0) currentValue = 0;
+            localStorage.setItem(key, currentValue);
+            updateDisplay();
+        };
+
         // Inicializa e atualiza a tela
+        initStorage();
         updateDisplay();
     </script>
 </body>
