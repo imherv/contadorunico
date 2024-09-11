@@ -77,10 +77,10 @@
             <button onclick="adjustCount('received', 'Elian', 1)">+1 Xingamento Recebido</button>
             <button onclick="adjustCount('received', 'Elian', -1)">-1 Desculpa Recebida</button>
         </div>
-        <div class="person" id="Victor">
-            <h2>Victor</h2>
-            <p>Bullying feitos: <span class="made" id="madeVictor">0</span></p>
-            <p>Bullying recebidos: <span class="received" id="receivedVictor">0</span></p>
+        <div class="person" id="Vitor">
+            <h2>Vitor</h2>
+            <p>Bullying feitos: <span class="made" id="madeVitor">0</span></p>
+            <p>Bullying recebidos: <span class="received" id="receivedVitor">0</span></p>
             <button onclick="adjustCount('made', 'Victor', 1)">+1 Xingamento Feito</button>
             <button onclick="adjustCount('made', 'Victor', -1)">-1 Pedido de Desculpa</button>
             <button onclick="adjustCount('received', 'Victor', 1)">+1 Xingamento Recebido</button>
@@ -91,7 +91,7 @@
     <script>
         // Inicializa os contadores do localStorage
         const initStorage = () => {
-            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
+            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
             people.forEach(person => {
                 if (!localStorage.getItem(`made_${person}`)) {
                     localStorage.setItem(`made_${person}`, '0');
@@ -104,7 +104,7 @@
 
         // Atualiza a exibição dos contadores
         const updateDisplay = () => {
-            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Victor'];
+            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
             people.forEach(person => {
                 document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
                 document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
