@@ -22,6 +22,7 @@
             border: 2px solid rgb(155, 155, 155);
             border-radius: 15px;
             width: 200px;
+            transition: background-color 0.5s;
         }
         button {
             margin: 5px;
@@ -105,9 +106,35 @@
         // Atualiza a exibição dos contadores
         const updateDisplay = () => {
             const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
+            let maxMade = 0, minMade = Number.MAX_VALUE;
+            let maxReceived = 0, minReceived = Number.MAX_VALUE;
+
             people.forEach(person => {
-                document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
-                document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
+                const made = parseInt(localStorage.getItem(`made_${person}`));
+                const received = parseInt(localStorage.getItem(`received_${person}`));
+                maxMade = Math.max(maxMade, made);
+                minMade = Math.min(minMade, made);
+                maxReceived = Math.max(maxReceived, received);
+                minReceived = Math.min(minReceived, received);
+            });
+
+            people.forEach(person => {
+                const made = parseInt(localStorage.getItem(`made_${person}`));
+                const received = parseInt(localStorage.getItem(`received_${person}`));
+                
+                // Degradê para o bullying feito
+                let madeColor = `rgb(${255 - Math.round((made - minMade) / (maxMade - minMade) * 255)}, 0, 0)`;
+                // Degradê para o bullying recebido
+                let receivedColor = `rgb(255, ${255 - Math.round((received - minReceived) / (maxReceived - minReceived) * 255)}, 0)`;
+
+                // Mixa as cores com base no bullying feito e recebido
+                let r = Math.round((255 - (255 - parseInt(madeColor.slice(4, 7)))) * 0.5 + (255 - parseInt(receivedColor.slice(4, 7))) * 0.5);
+                let g = Math.round((parseInt(madeColor.slice(9, 12)) + parseInt(receivedColor.slice(9, 12))) * 0.5);
+                let b = Math.round((255 - parseInt(madeColor.slice(4, 7)) + parseInt(receivedColor.slice(4, 7))) * 0.5);
+
+                document.getElementById(person).style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                document.getElementById(`made${person}`).textContent = made;
+                document.getElementById(`received${person}`).textContent = received;
             });
         };
 
