@@ -6,42 +6,72 @@
     <title>Contador de Bullying</title>
     <style>
         body {
-            background-color: #313131;
-            color: white;
-            font-family: Arial, sans-serif;
+            background-color: #2c2c2c;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #1a1a1a;
+            padding: 20px;
+            margin: 0;
+            color: #e0e0e0;
+            font-size: 2.5em;
         }
         .container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            padding: 20px;
         }
         .person {
-            margin: 10px;
+            margin: 15px;
             padding: 20px;
-            border: 2px solid rgb(155, 155, 155);
-            border-radius: 15px;
-            width: 200px;
-            transition: background-color 0.5s;
+            border: 2px solid #444;
+            border-radius: 10px;
+            width: 250px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.5s, transform 0.3s;
+        }
+        .person:hover {
+            transform: scale(1.05);
+        }
+        h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 5px 0;
         }
         button {
             margin: 5px;
-            padding: 15px;
-            background-color: #414141;
-            color: white;
+            padding: 12px 20px;
+            background-color: #4a4a4a;
+            color: #f0f0f0;
             border: none;
-            border-radius: 15px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.2s;
         }
         button:hover {
-            background-color: #555;
+            background-color: #6a6a6a;
+            transform: scale(1.05);
+        }
+        button:active {
+            background-color: #333;
+            transform: scale(0.95);
         }
     </style>
 </head>
 <body>
     <h1>Contador de Bullying</h1>
     <div class="container">
+        <!-- Repetir o bloco abaixo para cada pessoa -->
         <div class="person" id="Ana">
             <h2>Ana</h2>
             <p>Bullying feitos: <span class="made" id="madeAna">0</span></p>
@@ -49,9 +79,9 @@
             <button onclick="adjustCount('made', 'Ana', 1)">+1 Bullying Feito</button>
             <button onclick="adjustCount('made', 'Ana', -1)">-1 Pedido de Desculpa</button>
             <button onclick="adjustCount('received', 'Ana', 1)">+1 Bullying Recebido</button>
-            <button onclick="adjustCount('received', 'Ana', -1)">-1 Desculpa recebida</button>
+            <button onclick="adjustCount('received', 'Ana', -1)">-1 Desculpa Recebida</button>
         </div>
-        <!-- Repetir o bloco acima para Carol, Heverson, Elian, Vitor -->
+        <!-- Adicione blocos semelhantes para Carol, Heverson, Elian, Vitor -->
     </div>
 
     <script>
