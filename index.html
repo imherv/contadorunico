@@ -66,6 +66,52 @@
             background-color: #333;
             transform: scale(0.95);
         }
+        /* Estilos do pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 500px;
+            background-color: #333;
+            color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+        .popup-content {
+            margin-bottom: 20px;
+        }
+        .popup button.close {
+            background-color: #b33;
+            border: none;
+            padding: 10px 15px;
+            color: #fff;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .popup button.close:hover {
+            background-color: #d44;
+        }
+        .popup button.close:active {
+            background-color: #911;
+        }
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
     </style>
 </head>
 <body>
@@ -118,6 +164,23 @@
             <button onclick="adjustCount('received', 'Vitor', -1)">-1 Desculpa Recebida</button>
         </div>
         <!-- Adicione blocos semelhantes para Carol, Heverson, Elian, Vitor -->
+    </div>
+
+     </div>
+
+    <!-- Botão para mostrar estatísticas -->
+    <button onclick="showStatistics()">Mostrar Estatísticas</button>
+
+    <!-- Overlay e pop-up -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <h2>Estatísticas</h2>
+            <p id="mostBullying">Quem mais faz bullying: <span id="mostBullyingName">---</span></p>
+            <p id="mostReceived">Quem mais recebe bullying: <span id="mostReceivedName">---</span></p>
+            <p id="mostCalm">Quem está mais tranquilo: <span id="mostCalmName">---</span></p>
+        </div>
+        <button class="close" onclick="closePopup()">Fechar</button>
     </div>
 
     <script>
