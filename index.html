@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador de Bullying</title>
     <style>
-        /* Estilos do corpo da página */
+                /* Estilos do corpo da página */
         body {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: #ecf0f1;
@@ -18,12 +18,13 @@
         
         /* Estilo do título principal */
         h1 {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             padding: 20px;
             margin: 0;
             color: #ecf0f1;
             font-size: 2.5em;
-            border-bottom: 1px solid #34495e;
+            border-bottom: 2px solid #34495e;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
         
         /* Container principal para os blocos de pessoas */
@@ -45,12 +46,25 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             transition: background-color 0.5s, transform 0.3s;
+            position: relative;
         }
         
         /* Efeito de escala ao passar o mouse sobre um bloco */
         .person:hover {
             transform: scale(1.05);
             background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Adiciona uma borda superior com cor destacada ao passar o mouse */
+        .person:hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: #3498db;
+            border-radius: 12px 12px 0 0;
         }
         
         /* Estilo dos cabeçalhos dentro dos blocos de pessoa */
@@ -109,10 +123,6 @@
             backdrop-filter: blur(15px);
         }
         
-        .popup-content {
-            margin-bottom: 20px;
-        }
-        
         /* Estilos do botão de fechamento do pop-up */
         .popup button.close {
             background-color: #c0392b;
@@ -125,10 +135,12 @@
             transition: background-color 0.3s;
         }
         
+        /* Efeito ao passar o mouse sobre o botão de fechamento */
         .popup button.close:hover {
             background-color: #e74c3c;
         }
         
+        /* Efeito ao clicar no botão de fechamento */
         .popup button.close:active {
             background-color: #c0392b;
         }
@@ -144,6 +156,7 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
     </style>
 </head>
     
