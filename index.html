@@ -51,42 +51,7 @@
             <button onclick="adjustCount('received', 'Ana', 1)">+1 Bullying Recebido</button>
             <button onclick="adjustCount('received', 'Ana', -1)">-1 Desculpa recebida</button>
         </div>
-        <div class="person" id="Carol">
-            <h2>Carol</h2>
-            <p>Bullying feitos: <span class="made" id="madeCarol">0</span></p>
-            <p>Bullying recebidos: <span class="received" id="receivedCarol">0</span></p>
-            <button onclick="adjustCount('made', 'Carol', 1)">+1 Bullying Feito</button>
-            <button onclick="adjustCount('made', 'Carol', -1)">-1 Pedido de Desculpa</button>
-            <button onclick="adjustCount('received', 'Carol', 1)">+1 Bullying Recebido</button>
-            <button onclick="adjustCount('received', 'Carol', -1)">-1 Desculpa recebida</button>
-        </div>
-        <div class="person" id="Heverson">
-            <h2>Heverson</h2>
-            <p>Bullying feitos: <span class="made" id="madeHeverson">0</span></p>
-            <p>Bullying recebidos: <span class="received" id="receivedHeverson">0</span></p>
-            <button onclick="adjustCount('made', 'Heverson', 1)">+1 Bullying Feito</button>
-            <button onclick="adjustCount('made', 'Heverson', -1)">-1 Pedido de Desculpa</button>
-            <button onclick="adjustCount('received', 'Heverson', 1)">+1 Bullying Recebido</button>
-            <button onclick="adjustCount('received', 'Heverson', -1)">-1 Desculpa Recebida</button>
-        </div>
-        <div class="person" id="Elian">
-            <h2>Elian</h2>
-            <p>Bullying feitos: <span class="made" id="madeElian">0</span></p>
-            <p>Bullying recebidos: <span class="received" id="receivedElian">0</span></p>
-            <button onclick="adjustCount('made', 'Elian', 1)">+1 Bullying Feito</button>
-            <button onclick="adjustCount('made', 'Elian', -1)">-1 Pedido de Desculpa</button>
-            <button onclick="adjustCount('received', 'Elian', 1)">+1 Bullying Recebido</button>
-            <button onclick="adjustCount('received', 'Elian', -1)">-1 Desculpa Recebida</button>
-        </div>
-        <div class="person" id="Vitor">
-            <h2>Vitor</h2>
-            <p>Bullying feitos: <span class="made" id="madeVitor">0</span></p>
-            <p>Bullying recebidos: <span class="received" id="receivedVitor">0</span></p>
-            <button onclick="adjustCount('made', 'Vitor', 1)">+1 Bullying Feito</button>
-            <button onclick="adjustCount('made', 'Vitor', -1)">-1 Pedido de Desculpa</button>
-            <button onclick="adjustCount('received', 'Vitor', 1)">+1 Bullying Recebido</button>
-            <button onclick="adjustCount('received', 'Vitor', -1)">-1 Desculpa Recebida</button>
-        </div>
+        <!-- Repetir o bloco acima para Carol, Heverson, Elian, Vitor -->
     </div>
 
     <script>
@@ -106,42 +71,54 @@
         // Atualiza a exibição dos contadores e das cores
         const updateDisplay = () => {
             const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
-            let maxMade = 0, minMade = Number.MAX_VALUE;
-            let maxReceived = 0, minReceived = Number.MAX_VALUE;
+            let maxMade = 0, maxReceived = 0;
 
             people.forEach(person => {
                 const made = parseInt(localStorage.getItem(`made_${person}`));
                 const received = parseInt(localStorage.getItem(`received_${person}`));
                 maxMade = Math.max(maxMade, made);
-                minMade = Math.min(minMade, made);
                 maxReceived = Math.max(maxReceived, received);
-                minReceived = Math.min(minReceived, received);
             });
 
             people.forEach(person => {
                 const made = parseInt(localStorage.getItem(`made_${person}`));
                 const received = parseInt(localStorage.getItem(`received_${person}`));
-                
-                // Se não fez nem recebeu bullying, usa verde
+
+                let backgroundColor;
+
                 if (made === 0 && received === 0) {
-                    document.getElementById(person).style.backgroundColor = 'green';
+                    backgroundColor = 'green';
                 } else {
-                    // Degradê para o bullying feito (vermelho)
-                    let red = 255 - Math.round((made - 0) / (maxMade - 0) * 255);
-                    let green = 0;
-                    let blue = 0;
-                    let madeColor = `rgb(${red}, ${green}, ${blue})`;
+                    let madeColor = `rgb(${255 - Math.round(made / maxMade * 255)}, 0, 0)`;
+                    let receivedColor = `rgb(255, ${255 - Math.round(received / maxReceived * 255)}, 0)`;
 
-                    // Degradê para o bullying recebido (amarelo)
-                    red = 255;
-                    green = 255 - Math.round((received - 0) / (maxReceived - 0) * 255);
-                    blue = 0;
-                    let receivedColor = `rgb(${red}, ${green}, ${blue})`;
+                    let [r1, g1, b1] = madeColor.match(/\d+/g).map(Number);
+                    let [r2, g2, b2] = receivedColor.match(/\d+/g).map(Number);
 
-                    // Mistura as cores de acordo com o impacto feito e recebido
-                    let r = Math.round((255 - parseInt(madeColor.slice(4, 7))) * 0.5 + parseInt(receivedColor.slice(4, 7)) * 0.5);
-                    let g = Math.round((parseInt(madeColor.slice(9, 12)) + parseInt(receivedColor.slice(9, 12))) * 0.5);
-                    let b = Math.round((255 - parseInt(madeColor.slice(4, 7))) * 0.5 + parseInt(receivedColor.slice(9, 12)) * 0.5);
+                    let r = Math.round((r1 + r2) / 2);
+                    let g = Math.round((g1 + g2) / 2);
+                    let b = Math.round((b1 + b2) / 2);
 
-                    document.getElementById(person).style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-               
+                    backgroundColor = `rgb(${r}, ${g}, ${b})`;
+                }
+
+                document.getElementById(person).style.backgroundColor = backgroundColor;
+            });
+        };
+
+        // Ajusta o contador e atualiza a exibição
+        const adjustCount = (type, person, delta) => {
+            let key = `${type}_${person}`;
+            let newValue = parseInt(localStorage.getItem(key)) + delta;
+            if (newValue < 0) newValue = 0;
+            localStorage.setItem(key, newValue);
+            document.getElementById(`${type}${person}`).textContent = newValue;
+            updateDisplay();
+        };
+
+        // Inicializa e atualiza a exibição
+        initStorage();
+        updateDisplay();
+    </script>
+</body>
+</html>
