@@ -103,7 +103,7 @@
             });
         };
 
-        // Atualiza a exibição dos contadores
+        // Atualiza a exibição dos contadores e das cores
         const updateDisplay = () => {
             const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
             let maxMade = 0, minMade = Number.MAX_VALUE;
@@ -122,35 +122,26 @@
                 const made = parseInt(localStorage.getItem(`made_${person}`));
                 const received = parseInt(localStorage.getItem(`received_${person}`));
                 
-                // Degradê para o bullying feito
-                let madeColor = `rgb(${255 - Math.round((made - minMade) / (maxMade - minMade) * 255)}, 0, 0)`;
-                // Degradê para o bullying recebido
-                let receivedColor = `rgb(255, ${255 - Math.round((received - minReceived) / (maxReceived - minReceived) * 255)}, 0)`;
+                // Se não fez nem recebeu bullying, usa verde
+                if (made === 0 && received === 0) {
+                    document.getElementById(person).style.backgroundColor = 'green';
+                } else {
+                    // Degradê para o bullying feito (vermelho)
+                    let red = 255 - Math.round((made - 0) / (maxMade - 0) * 255);
+                    let green = 0;
+                    let blue = 0;
+                    let madeColor = `rgb(${red}, ${green}, ${blue})`;
 
-                // Mixa as cores com base no bullying feito e recebido
-                let r = Math.round((255 - (255 - parseInt(madeColor.slice(4, 7)))) * 0.5 + (255 - parseInt(receivedColor.slice(4, 7))) * 0.5);
-                let g = Math.round((parseInt(madeColor.slice(9, 12)) + parseInt(receivedColor.slice(9, 12))) * 0.5);
-                let b = Math.round((255 - parseInt(madeColor.slice(4, 7)) + parseInt(receivedColor.slice(4, 7))) * 0.5);
+                    // Degradê para o bullying recebido (amarelo)
+                    red = 255;
+                    green = 255 - Math.round((received - 0) / (maxReceived - 0) * 255);
+                    blue = 0;
+                    let receivedColor = `rgb(${red}, ${green}, ${blue})`;
 
-                document.getElementById(person).style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
-                document.getElementById(`made${person}`).textContent = made;
-                document.getElementById(`received${person}`).textContent = received;
-            });
-        };
+                    // Mistura as cores de acordo com o impacto feito e recebido
+                    let r = Math.round((255 - parseInt(madeColor.slice(4, 7))) * 0.5 + parseInt(receivedColor.slice(4, 7)) * 0.5);
+                    let g = Math.round((parseInt(madeColor.slice(9, 12)) + parseInt(receivedColor.slice(9, 12))) * 0.5);
+                    let b = Math.round((255 - parseInt(madeColor.slice(4, 7))) * 0.5 + parseInt(receivedColor.slice(9, 12)) * 0.5);
 
-        // Ajusta o contador e armazena no localStorage
-        const adjustCount = (type, person, value) => {
-            let key = `${type}_${person}`;
-            let currentValue = parseInt(localStorage.getItem(key));
-            currentValue += value;
-            if (currentValue < 0) currentValue = 0;
-            localStorage.setItem(key, currentValue);
-            updateDisplay();
-        };
-
-        // Inicializa e atualiza a tela
-        initStorage();
-        updateDisplay();
-    </script>
-</body>
-</html>
+                    document.getElementById(person).style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+               
