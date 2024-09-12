@@ -226,39 +226,44 @@
     </div>
     
         <script>
-        // Inicializa os contadores do localStorage
-        const initStorage = () => {
-            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
-            people.forEach(person => {
-                if (localStorage.getItem(`made_${person}`) === null) {
-                    localStorage.setItem(`made_${person}`, '0');
-                }
-                if (localStorage.getItem(`received_${person}`) === null) {
-                    localStorage.setItem(`received_${person}`, '0');
-                }
-            });
-        };
+    // Inicializa os contadores do localStorage
+    const initStorage = () => {
+        const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
+        people.forEach(person => {
+            if (localStorage.getItem(`made_${person}`) === null) {
+                localStorage.setItem(`made_${person}`, '0');
+            }
+            if (localStorage.getItem(`received_${person}`) === null) {
+                localStorage.setItem(`received_${person}`, '0');
+            }
+        });
+    };
 
-        // Atualiza a exibição dos contadores e das cores
-        const updateDisplay = () => {
-            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
-            let maxMade = 0, maxReceived = 0;
+    // Atualiza a exibição dos contadores e das cores
+    const updateDisplay = () => {
+        const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
+        let maxMade = 0, maxReceived = 0;
 
-            people.forEach(person => {
-                const made = parseInt(localStorage.getItem(`made_${person}`));
-                const received = parseInt(localStorage.getItem(`received_${person}`));
-                maxMade = Math.max(maxMade, made);
-                maxReceived = Math.max(maxReceived, received);
-            });
+        people.forEach(person => {
+            const made = parseInt(localStorage.getItem(`made_${person}`));
+            const received = parseInt(localStorage.getItem(`received_${person}`));
+            maxMade = Math.max(maxMade, made);
+            maxReceived = Math.max(maxReceived, received);
+        });
 
-            people.forEach(person => {
-                const made = parseInt(localStorage.getItem(`made_${person}`));
-                const received = parseInt(localStorage.getItem(`received_${person}`));
+        people.forEach(person => {
+            const made = parseInt(localStorage.getItem(`made_${person}`));
+            const received = parseInt(localStorage.getItem(`received_${person}`));
 
-                let backgroundColor;
+            let backgroundColor;
 
-                if (made === 0 && received === 0) {
-                    backgroundColor = 'green';
+            if (made === 0 && received === 0) {
+                backgroundColor = 'green'; // Verde para quem não tem registros
+            } else {
+                if (received === maxReceived) {
+                    backgroundColor = 'yellow'; // Amarelo para quem recebeu mais bullying
+                } else if (made === maxMade) {
+                    backgroundColor = 'red'; // Vermelho para quem fez mais bullying
                 } else {
                     let madeColor = `rgb(${255 - Math.round(made / maxMade * 255)}, 0, 0)`;
                     let receivedColor = `rgb(255, ${255 - Math.round(received / maxReceived * 255)}, 0)`;
@@ -272,68 +277,70 @@
 
                     backgroundColor = `rgb(${r}, ${g}, ${b})`;
                 }
+            }
 
-                document.getElementById(person).style.backgroundColor = backgroundColor;
-                document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
-                document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
-            });
-        };
+            document.getElementById(person).style.backgroundColor = backgroundColor;
+            document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
+            document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
+        });
+    };
 
-        // Ajusta o contador e atualiza a exibição
-        const adjustCount = (type, person, delta) => {
-            let key = `${type}_${person}`;
-            let newValue = parseInt(localStorage.getItem(key)) + delta;
-            if (newValue < 0) newValue = 0;
-            localStorage.setItem(key, newValue);
-            document.getElementById(`${type}${person}`).textContent = newValue;
-            updateDisplay();
-        };
-
-        // Mostra o pop-up com as estatísticas
-        const showStatistics = () => {
-            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
-            let maxMade = -1, maxReceived = -1, minMade = Number.MAX_SAFE_INTEGER, minReceived = Number.MAX_SAFE_INTEGER;
-            let mostBullying = '', mostReceived = '', mostCalm = '';
-
-            people.forEach(person => {
-                const made = parseInt(localStorage.getItem(`made_${person}`));
-                const received = parseInt(localStorage.getItem(`received_${person}`));
-
-                if (made > maxMade) {
-                    maxMade = made;
-                    mostBullying = person;
-                }
-
-                if (received > maxReceived) {
-                    maxReceived = received;
-                    mostReceived = person;
-                }
-
-                if (made + received < minMade + minReceived) {
-                    minMade = made;
-                    minReceived = received;
-                    mostCalm = person;
-                }
-            });
-
-            document.getElementById('mostBullyingName').textContent = mostBullying;
-            document.getElementById('mostReceivedName').textContent = mostReceived;
-            document.getElementById('mostCalmName').textContent = mostCalm;
-
-            document.getElementById('popup').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        };
-
-        // Fecha o pop-up
-        const closePopup = () => {
-            document.getElementById('popup').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        };
-
-        // Inicializa e atualiza a exibição
-        initStorage();
+    // Ajusta o contador e atualiza a exibição
+    const adjustCount = (type, person, delta) => {
+        let key = `${type}_${person}`;
+        let newValue = parseInt(localStorage.getItem(key)) + delta;
+        if (newValue < 0) newValue = 0;
+        localStorage.setItem(key, newValue);
+        document.getElementById(`${type}${person}`).textContent = newValue;
         updateDisplay();
-    </script>
+    };
+
+    // Mostra o pop-up com as estatísticas
+    const showStatistics = () => {
+        const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
+        let maxMade = -1, maxReceived = -1, minMade = Number.MAX_SAFE_INTEGER, minReceived = Number.MAX_SAFE_INTEGER;
+        let mostBullying = '', mostReceived = '', mostCalm = '';
+
+        people.forEach(person => {
+            const made = parseInt(localStorage.getItem(`made_${person}`));
+            const received = parseInt(localStorage.getItem(`received_${person}`));
+
+            if (made > maxMade) {
+                maxMade = made;
+                mostBullying = person;
+            }
+
+            if (received > maxReceived) {
+                maxReceived = received;
+                mostReceived = person;
+            }
+
+            if (made + received < minMade + minReceived) {
+                minMade = made;
+                minReceived = received;
+                mostCalm = person;
+            }
+        });
+
+        document.getElementById('mostBullyingName').textContent = mostBullying;
+        document.getElementById('mostReceivedName').textContent = mostReceived;
+        document.getElementById('mostCalmName').textContent = mostCalm;
+
+        document.getElementById('popup').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    };
+
+    // Fecha o pop-up
+    const closePopup = () => {
+        document.getElementById('popup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    };
+
+    // Inicializa e atualiza a exibição
+    initStorage();
+    updateDisplay();
+</script>
+
 </body>
 </html>
 
