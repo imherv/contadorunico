@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contador de Bullying</title>
     <style>
+        /* Estilos do corpo da página */
         body {
             background-color: #2c2c2c;
             color: #f0f0f0;
@@ -13,6 +14,7 @@
             margin: 0;
             padding: 0;
         }
+        /* Estilo do título principal */
         h1 {
             background-color: #1a1a1a;
             padding: 20px;
@@ -20,12 +22,14 @@
             color: #e0e0e0;
             font-size: 2.5em;
         }
+        /* Container principal para os blocos de pessoas */
         .container {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             padding: 20px;
         }
+        /* Estilos para os blocos individuais de pessoas */
         .person {
             margin: 15px;
             padding: 20px;
@@ -35,17 +39,21 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             transition: background-color 0.5s, transform 0.3s;
         }
+        /* Efeito de escala ao passar o mouse sobre um bloco */
         .person:hover {
             transform: scale(1.05);
         }
+        /* Estilo dos cabeçalhos dentro dos blocos de pessoa */
         h2 {
             margin-top: 0;
             font-size: 1.5em;
         }
+        /* Estilo dos parágrafos dentro dos blocos de pessoa */
         p {
             font-size: 1.2em;
             margin: 5px 0;
         }
+        /* Estilos para os botões */
         button {
             margin: 5px;
             padding: 12px 20px;
@@ -58,10 +66,12 @@
             font-size: 1em;
             transition: background-color 0.3s, transform 0.2s;
         }
+        /* Efeito ao passar o mouse sobre um botão */
         button:hover {
             background-color: #6a6a6a;
             transform: scale(1.05);
         }
+        /* Efeito ao clicar em um botão */
         button:active {
             background-color: #333;
             transform: scale(0.95);
@@ -85,6 +95,7 @@
         .popup-content {
             margin-bottom: 20px;
         }
+        /* Estilos do botão de fechamento do pop-up */
         .popup button.close {
             background-color: #b33;
             border: none;
@@ -101,7 +112,7 @@
         .popup button.close:active {
             background-color: #911;
         }
-        /* Overlay */
+        /* Estilos do overlay */
         .overlay {
             display: none;
             position: fixed;
@@ -114,6 +125,7 @@
         }
     </style>
 </head>
+    
 <body>
     <h1>Contador de Bullying</h1>
     <div class="container">
@@ -163,11 +175,9 @@
             <button onclick="adjustCount('received', 'Vitor', 1)">+1 Bullying Recebido</button>
             <button onclick="adjustCount('received', 'Vitor', -1)">-1 Desculpa Recebida</button>
         </div>
-        <!-- Adicione blocos semelhantes para Carol, Heverson, Elian, Vitor -->
     </div>
-</div>
 
-     <!-- Botão para mostrar estatísticas -->
+    <!-- Botão para mostrar estatísticas -->
     <button onclick="showStatistics()">Mostrar Estatísticas</button>
 
     <!-- Overlay e pop-up -->
@@ -182,7 +192,7 @@
         <button class="close" onclick="closePopup()">Fechar</button>
     </div>
     
-    <script>
+        <script>
         // Inicializa os contadores do localStorage
         const initStorage = () => {
             const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
@@ -293,3 +303,4 @@
     </script>
 </body>
 </html>
+
