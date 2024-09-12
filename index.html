@@ -7,7 +7,7 @@
     <style>
                 /* Estilos do corpo da página */
         body {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, #2c2c2c, #4a4a4a);
             color: #ecf0f1;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
@@ -18,13 +18,13 @@
         
         /* Estilo do título principal */
         h1 {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             margin: 0;
             color: #ecf0f1;
             font-size: 2.5em;
-            border-bottom: 2px solid #34495e;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-bottom: 2px solid #555;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
         }
         
         /* Container principal para os blocos de pessoas */
@@ -39,12 +39,12 @@
         .person {
             margin: 15px;
             padding: 20px;
-            border: 2px solid #34495e;
+            border: 2px solid #555;
             border-radius: 12px;
             width: 250px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             transition: background-color 0.5s, transform 0.3s;
             position: relative;
         }
@@ -52,7 +52,7 @@
         /* Efeito de escala ao passar o mouse sobre um bloco */
         .person:hover {
             transform: scale(1.05);
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.8);
         }
         
         /* Adiciona uma borda superior com cor destacada ao passar o mouse */
@@ -63,7 +63,7 @@
             left: 0;
             width: 100%;
             height: 5px;
-            background-color: #3498db;
+            background-color: #888;
             border-radius: 12px 12px 0 0;
         }
         
@@ -83,7 +83,7 @@
         button {
             margin: 5px;
             padding: 12px 20px;
-            background-color: #2980b9;
+            background-color: #555;
             color: #ecf0f1;
             border: none;
             border-radius: 5px;
@@ -95,13 +95,13 @@
         
         /* Efeito ao passar o mouse sobre um botão */
         button:hover {
-            background-color: #3498db;
+            background-color: #666;
             transform: scale(1.05);
         }
         
         /* Efeito ao clicar em um botão */
         button:active {
-            background-color: #2980b9;
+            background-color: #444;
             transform: scale(0.95);
         }
         
@@ -118,7 +118,7 @@
             color: #ecf0f1;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
             z-index: 1000;
             backdrop-filter: blur(15px);
         }
@@ -156,7 +156,6 @@
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
     </style>
 </head>
     
