@@ -165,10 +165,9 @@
         </div>
         <!-- Adicione blocos semelhantes para Carol, Heverson, Elian, Vitor -->
     </div>
+</div>
 
-     </div>
-
-    <!-- Botão para mostrar estatísticas -->
+     <!-- Botão para mostrar estatísticas -->
     <button onclick="showStatistics()">Mostrar Estatísticas</button>
 
     <!-- Overlay e pop-up -->
@@ -182,7 +181,7 @@
         </div>
         <button class="close" onclick="closePopup()">Fechar</button>
     </div>
-
+    
     <script>
         // Inicializa os contadores do localStorage
         const initStorage = () => {
@@ -245,6 +244,47 @@
             localStorage.setItem(key, newValue);
             document.getElementById(`${type}${person}`).textContent = newValue;
             updateDisplay();
+        };
+
+        // Mostra o pop-up com as estatísticas
+        const showStatistics = () => {
+            const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
+            let maxMade = -1, maxReceived = -1, minMade = Number.MAX_SAFE_INTEGER, minReceived = Number.MAX_SAFE_INTEGER;
+            let mostBullying = '', mostReceived = '', mostCalm = '';
+
+            people.forEach(person => {
+                const made = parseInt(localStorage.getItem(`made_${person}`));
+                const received = parseInt(localStorage.getItem(`received_${person}`));
+
+                if (made > maxMade) {
+                    maxMade = made;
+                    mostBullying = person;
+                }
+
+                if (received > maxReceived) {
+                    maxReceived = received;
+                    mostReceived = person;
+                }
+
+                if (made + received < minMade + minReceived) {
+                    minMade = made;
+                    minReceived = received;
+                    mostCalm = person;
+                }
+            });
+
+            document.getElementById('mostBullyingName').textContent = mostBullying;
+            document.getElementById('mostReceivedName').textContent = mostReceived;
+            document.getElementById('mostCalmName').textContent = mostCalm;
+
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        };
+
+        // Fecha o pop-up
+        const closePopup = () => {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
         };
 
         // Inicializa e atualiza a exibição
