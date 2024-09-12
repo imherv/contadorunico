@@ -125,10 +125,10 @@
         const initStorage = () => {
             const people = ['Ana', 'Carol', 'Heverson', 'Elian', 'Vitor'];
             people.forEach(person => {
-                if (!localStorage.getItem(`made_${person}`)) {
+                if (localStorage.getItem(`made_${person}`) === null) {
                     localStorage.setItem(`made_${person}`, '0');
                 }
-                if (!localStorage.getItem(`received_${person}`)) {
+                if (localStorage.getItem(`received_${person}`) === null) {
                     localStorage.setItem(`received_${person}`, '0');
                 }
             });
@@ -169,6 +169,8 @@
                 }
 
                 document.getElementById(person).style.backgroundColor = backgroundColor;
+                document.getElementById(`made${person}`).textContent = localStorage.getItem(`made_${person}`);
+                document.getElementById(`received${person}`).textContent = localStorage.getItem(`received_${person}`);
             });
         };
 
